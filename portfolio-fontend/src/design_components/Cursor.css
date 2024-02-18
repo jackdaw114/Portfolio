@@ -3,7 +3,6 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    box-shadow: 1px 1px 10px grey;
     border: 2px solid transparent;
     /* Set border to transparent */
     mix-blend-mode: difference;
@@ -17,6 +16,7 @@
 
 .cursor::after {
     box-shadow: 0 0 10px grey;
+    content: '';
     top: 0;
     left: 0;
     right: 0;
