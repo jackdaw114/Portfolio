@@ -1,0 +1,9 @@
+* {
+    cursor: none;
+    /* pointer-events: none; */
+}
+
+*:hover {
+    cursor: none;
+    /* pointer-events: none; */
+}

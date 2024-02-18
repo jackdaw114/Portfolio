@@ -1,0 +1,78 @@
+.cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: 1px 1px 10px grey;
+    border: 2px solid transparent;
+    /* Set border to transparent */
+    mix-blend-mode: difference;
+    z-index: 9999;
+
+
+    mix-blend-mode: difference;
+    /* Blend mode to invert colors */
+
+}
+
+.cursor::after {
+    box-shadow: 0 0 10px grey;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 2px solid red;
+    /* Original color of the circle */
+    border-radius: 50%;
+}
+
+.trail {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+    box-shadow: 0 0 0px grey;
+    border: 2px solid transparent;
+    /* Set border to transparent */
+    mix-blend-mode: difference;
+    z-index: 9999;
+
+
+    mix-blend-mode: difference;
+    /* Blend mode to invert colors */
+
+}
+
+.trail::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    /* Original color of the circle */
+    border-radius: 50%;
+    box-shadow: 0 0 0px grey;
+    /* Define the initial glow effect */
+
+}
+
+
+@keyframes click {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Apply the animation to elements with the .slide-in class */
+.click {
+    animation: click 0.05s ease forwards;
+}
