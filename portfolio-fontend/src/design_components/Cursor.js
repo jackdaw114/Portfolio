@@ -6,7 +6,7 @@ import { MouseContext } from './MouseContext';
 const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { isHovered } = useContext(MouseContext);
-  const [trail, setTrail] = useState([]);
+  const [trail, setTrail] = useState([0]);
 
 
   const handleAnimationEnd = () => {
@@ -17,14 +17,14 @@ const Cursor = () => {
     setPosition({ x: e.pageX, y: e.pageY });
     setTrail(prevTrail => {
       const newTrail = [...prevTrail, { id: Date.now(), x: e.pageX, y: e.pageY }];
-      if (newTrail.length > 10) {
-        return newTrail.slice(1); // Keep only the last 10 trail items
+      if (newTrail.length > 20) {
+        return newTrail.slice(1);
       }
       return newTrail;
     });
     setTimeout(() => {
       setTrail(prevTrail => prevTrail.slice(1));
-    }, 500);
+    }, 200);
   };
   useEffect(() => {
 
@@ -57,14 +57,24 @@ const Cursor = () => {
         onAnimationEnd={handleAnimationEnd}
         style={{ left: position.x, top: position.y }}
       />
-      <div className="trail-container">
+      {/* <div className="trail-container">
         {trail.map((trailItem) => (
           <div
             className="trail"
             style={{ top: trailItem.y, left: trailItem.x }}
           ></div>
         ))}
-      </div>
+      </div> */}
+      <svg width="100vw" height="100vh" style={{ position: 'fixed', zIndex: 9999 }}>
+        <path d={`M ${trail[trail.length - 1].x} ${trail[trail.length - 1].y} Q ${trail[parseInt((trail.length - 1) / 1.15)].x} ${trail[parseInt((trail.length - 1) / 1.15)].y}, ${trail[parseInt((trail.length - 1) / 1.3)].x} ${trail[parseInt((trail.length - 1) / 1.3)].y}  T ${trail[parseInt((trail.length - 1) / 2)].x} ${trail[parseInt((trail.length - 1) / 2)].y}`}
+          stroke-width="3"
+          fill="none"
+          stroke="black"
+        />
+      </svg>
+
+
+
     </>
   );
 };

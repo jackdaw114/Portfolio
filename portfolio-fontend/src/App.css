@@ -1,9 +1,8 @@
 * {
-    cursor: none;
-    /* pointer-events: none; */
+    cursor: none !important;
 }
 
 *:hover {
-    cursor: none;
+    cursor: none !important;
     /* pointer-events: none; */
 }
