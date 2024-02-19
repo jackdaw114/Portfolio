@@ -7,12 +7,9 @@ const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { isHovered } = useContext(MouseContext);
   const [trail, setTrail] = useState([0]);
+  const [clickRipple, setClickRipple] = useState([]);
 
 
-  const handleAnimationEnd = () => {
-    const cursorDiv = document.getElementById('cursor_div');
-    cursorDiv.classList.remove('click');
-  };
   const moveCursor = (e) => {
     setPosition({ x: e.pageX, y: e.pageY });
     setTrail(prevTrail => {
@@ -35,11 +32,19 @@ const Cursor = () => {
     };
   }, []);
 
+  const mouseClick = (e) => {
+    setClickRipple(prevRipple => {
+      const newRipple = [...prevRipple, { id: Date.now(), x: e.pageX, y: e.pageY }];
+      if (newRipple.length > 20) {
+        return newRipple.slice(1);
+      }
+      return newRipple;
+    });
+    setTimeout(() => {
+      setClickRipple(prevRipple => prevRipple.slice(1));
+    }, 400);
+  };
   useEffect(() => {
-    const mouseClick = () => {
-      const cursorDiv = document.getElementById('cursor_div');
-      cursorDiv.classList.add('click');
-    };
 
     document.addEventListener('click', mouseClick);
 
@@ -54,7 +59,7 @@ const Cursor = () => {
       <div
         id='cursor_div'
         className={`cursor ${isHovered ? 'hovering-button' : ''}`}
-        onAnimationEnd={handleAnimationEnd}
+
         style={{ left: position.x, top: position.y }}
       />
       {/* <div className="trail-container">
@@ -65,6 +70,15 @@ const Cursor = () => {
           ></div>
         ))}
       </div> */}
+      <div className="click-ripple-container">
+        {clickRipple.map((rippleItem) => (
+          <div
+            className="click"
+            key={rippleItem.id}
+            style={{ top: rippleItem.y, left: rippleItem.x }}
+          ></div>
+        ))}
+      </div>
       <svg width="100vw" height="100vh" style={{ position: 'fixed', zIndex: 9999 }}>
         <path d={`M ${trail[trail.length - 1].x} ${trail[trail.length - 1].y} Q ${trail[parseInt((trail.length - 1) / 1.15)].x} ${trail[parseInt((trail.length - 1) / 1.15)].y}, ${trail[parseInt((trail.length - 1) / 1.3)].x} ${trail[parseInt((trail.length - 1) / 1.3)].y}  T ${trail[parseInt((trail.length - 1) / 2)].x} ${trail[parseInt((trail.length - 1) / 2)].y}`}
           stroke-width="3"

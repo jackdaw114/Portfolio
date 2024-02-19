@@ -3,17 +3,26 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    border: 4px solid black;
+    border: 4px solid transparent;
     /* Set border to transparent */
-    transform: translate(-7px, -7px);
-    box-shadow: 0 0 10px grey;
-    mix-blend-mode: difference;
+    transform: translate(-11px, -11px);
     z-index: 9999;
     cursor: inherit;
     pointer-events: none;
     mix-blend-mode: difference;
     /* Blend mode to invert colors */
 
+}
+
+.cursor::after {
+    box-shadow: 0 0 10px grey;
+    content: '';
+    border: 4px solid rgb(255, 255, 255);
+    /* Original color of the circle */
+    border-radius: 50%;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .trail {
@@ -36,20 +45,23 @@
 }
 
 @keyframes click {
-    0% {
-        border-radius: 50%;
-    }
 
-    50% {
-        border-radius: 0%;
-    }
+    to {
+        width: 66px;
+        height: 66px;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0),
+            0 0 20px rgba(0, 0, 0, 0.0);
 
-    100% {
-        border-radius: 50%;
     }
 }
 
-/* Apply the animation to elements with the .slide-in class */
 .click {
-    animation: click 0.1s ease-in-out forwards;
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: click 0.4s ease-in-out forwards;
 }
