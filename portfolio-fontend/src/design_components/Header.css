@@ -1,0 +1,43 @@
+.js_header {
+    width: 400px;
+    height: 68px;
+}
+
+.js_header path {
+    fill: #a6e3a3;
+    stroke: #a6e3a3;
+
+    stroke-width: 2px;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    fill-opacity: 0;
+    animation: dash 1.5s linear forwards;
+}
+
+.header {
+    background-color: none;
+
+    animation: entry 0.5s ease forwards;
+
+}
+
+@keyframes entry {
+    to {
+        background-color: #1a1f28;
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+
+    90% {
+        fill-opacity: 0;
+    }
+
+    100% {
+        stroke-dashoffset: 500;
+        fill-opacity: 1;
+    }
+}

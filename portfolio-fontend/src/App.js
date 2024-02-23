@@ -6,20 +6,25 @@ import CustomButton from './design_components/CustomButton';
 import theme from './design_components/Theme';
 import { MouseContext, MouseProvider } from './design_components/MouseContext';
 import MainAnimation from './components/MainAnimation';
+import { AnimationProvider } from './design_components/AnimationContext';
+import LandingPage from './components/LandingPage';
+import Terminal from './components/Terminal';
 
 function App() {
 
   return (
-    <Box sx={{ minHeight: '100vh', minWidth: '100vw' }}>
-
-      <ThemeProvider theme={theme}>
-        <MouseProvider>
-          <Cursor />
-          <MainAnimation />
-        </MouseProvider>
-
-      </ThemeProvider>
-    </Box>
+    <Box sx={{ minHeight: '100vh', minWidth: '100vw', backgroundColor: '#FFF' }}>
+      <AnimationProvider>
+        <ThemeProvider theme={theme}>
+          <MouseProvider>
+            <Cursor />
+            <MainAnimation />
+            <LandingPage />
+            <Terminal />
+          </MouseProvider>
+        </ThemeProvider>
+      </AnimationProvider>
+    </Box >
   );
 }
 

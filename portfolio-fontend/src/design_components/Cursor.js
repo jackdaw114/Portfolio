@@ -1,15 +1,17 @@
 // Cursor.js
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import './Cursor.css';
 import { MouseContext } from './MouseContext';
-
+import { AnimationContext } from './AnimationContext';
+import { Box } from '@mui/material';
+import Paper from "paper";
 const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { isHovered } = useContext(MouseContext);
   const [trail, setTrail] = useState([0]);
   const [clickRipple, setClickRipple] = useState([]);
 
-
+  const { bColor } = useContext(AnimationContext)
   const moveCursor = (e) => {
     setPosition({ x: e.pageX, y: e.pageY });
     setTrail(prevTrail => {
@@ -54,14 +56,24 @@ const Cursor = () => {
   }, []);
 
 
+
+  const canvasRef = useRef(null);
+
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    Paper.setup(canvas);
+    draw1();
+  }, []);
   return (
     <>
-      <div
+      <Box
         id='cursor_div'
         className={`cursor ${isHovered ? 'hovering-button' : ''}`}
 
-        style={{ left: position.x, top: position.y }}
+        sx={{ borderWidth: '3px', borderColor: bColor[0] > 255 / 2 || bColor[1] > 255 / 2 || bColor[2] > 255 / 2 ? 'black' : '#a6e3a3 ', left: position.x, top: position.y }}
       />
+      <canvas ref={canvasRef} resize="true" id="canvas" />
       {/* <div className="trail-container">
         {trail.map((trailItem) => (
           <div
@@ -75,15 +87,19 @@ const Cursor = () => {
           <div
             className="click"
             key={rippleItem.id}
-            style={{ top: rippleItem.y, left: rippleItem.x }}
+            style={{
+              top: rippleItem.y, left: rippleItem.x, boxShadow: `inset 0 0 10px rgba(${255 - bColor[0]},${255 - bColor[1]},${255 - bColor[2]}, 0.4),
+              0 0 10px rgba(${255 - bColor[0]},${255 - bColor[1]},${255 - bColor[2]}, 0.9)`
+            }}
           ></div>
         ))}
       </div>
       <svg width="100vw" height="100vh" style={{ position: 'fixed', zIndex: 9999 }}>
+
         <path d={`M ${trail[trail.length - 1].x} ${trail[trail.length - 1].y} Q ${trail[parseInt((trail.length - 1) / 1.15)].x} ${trail[parseInt((trail.length - 1) / 1.15)].y}, ${trail[parseInt((trail.length - 1) / 1.3)].x} ${trail[parseInt((trail.length - 1) / 1.3)].y}  T ${trail[parseInt((trail.length - 1) / 2)].x} ${trail[parseInt((trail.length - 1) / 2)].y}`}
-          stroke-width="3"
+          stroke-width="2"
           fill="none"
-          stroke="black"
+          stroke={bColor[0] > 255 / 2 || bColor[1] > 255 / 2 || bColor[2] > 255 / 2 ? 'black' : '#a6e3a3'}
         />
       </svg>
 
