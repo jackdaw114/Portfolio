@@ -12,6 +12,11 @@
 
 }
 
+
+.pointer-disable {
+    pointer-events: none;
+}
+
 /* 
 .cursor::after {
     box-shadow: 0 0 10px grey;

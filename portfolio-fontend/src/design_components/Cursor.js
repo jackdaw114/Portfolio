@@ -4,7 +4,7 @@ import './Cursor.css';
 import { MouseContext } from './MouseContext';
 import { AnimationContext } from './AnimationContext';
 import { Box } from '@mui/material';
-import Paper from "paper";
+
 const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { isHovered } = useContext(MouseContext);
@@ -16,7 +16,7 @@ const Cursor = () => {
     setPosition({ x: e.pageX, y: e.pageY });
     setTrail(prevTrail => {
       const newTrail = [...prevTrail, { id: Date.now(), x: e.pageX, y: e.pageY }];
-      if (newTrail.length > 20) {
+      if (newTrail.length > 10) {
         return newTrail.slice(1);
       }
       return newTrail;
@@ -37,7 +37,7 @@ const Cursor = () => {
   const mouseClick = (e) => {
     setClickRipple(prevRipple => {
       const newRipple = [...prevRipple, { id: Date.now(), x: e.pageX, y: e.pageY }];
-      if (newRipple.length > 20) {
+      if (newRipple.length > 10) {
         return newRipple.slice(1);
       }
       return newRipple;
@@ -60,11 +60,7 @@ const Cursor = () => {
   const canvasRef = useRef(null);
 
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    Paper.setup(canvas);
-    draw1();
-  }, []);
+
   return (
     <>
       <Box
@@ -73,15 +69,7 @@ const Cursor = () => {
 
         sx={{ borderWidth: '3px', borderColor: bColor[0] > 255 / 2 || bColor[1] > 255 / 2 || bColor[2] > 255 / 2 ? 'black' : '#a6e3a3 ', left: position.x, top: position.y }}
       />
-      <canvas ref={canvasRef} resize="true" id="canvas" />
-      {/* <div className="trail-container">
-        {trail.map((trailItem) => (
-          <div
-            className="trail"
-            style={{ top: trailItem.y, left: trailItem.x }}
-          ></div>
-        ))}
-      </div> */}
+
       <div className="click-ripple-container">
         {clickRipple.map((rippleItem) => (
           <div
@@ -94,14 +82,14 @@ const Cursor = () => {
           ></div>
         ))}
       </div>
-      <svg width="100vw" height="100vh" style={{ position: 'fixed', zIndex: 9999 }}>
+      {trail.length ? <svg className='pointer-disable' width="100vw" height="100vh" style={{ position: 'fixed', zIndex: 9999 }}>
 
-        <path d={`M ${trail[trail.length - 1].x} ${trail[trail.length - 1].y} Q ${trail[parseInt((trail.length - 1) / 1.15)].x} ${trail[parseInt((trail.length - 1) / 1.15)].y}, ${trail[parseInt((trail.length - 1) / 1.3)].x} ${trail[parseInt((trail.length - 1) / 1.3)].y}  T ${trail[parseInt((trail.length - 1) / 2)].x} ${trail[parseInt((trail.length - 1) / 2)].y}`}
+        <path className='pointer-disable' d={`M ${trail[trail.length - 1].x} ${trail[trail.length - 1].y} Q ${trail[parseInt((trail.length - 1) / 1.15)].x} ${trail[parseInt((trail.length - 1) / 1.15)].y}, ${trail[parseInt((trail.length - 1) / 1.3)].x} ${trail[parseInt((trail.length - 1) / 1.3)].y}  T ${trail[parseInt((trail.length - 1) / 2)].x} ${trail[parseInt((trail.length - 1) / 2)].y}`}
           stroke-width="2"
           fill="none"
           stroke={bColor[0] > 255 / 2 || bColor[1] > 255 / 2 || bColor[2] > 255 / 2 ? 'black' : '#a6e3a3'}
         />
-      </svg>
+      </svg> : <></>}
 
 
 

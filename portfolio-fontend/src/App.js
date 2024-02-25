@@ -13,19 +13,21 @@ import Terminal from './components/Terminal';
 function App() {
 
   return (
-    <Box sx={{ minHeight: '100vh', minWidth: '100vw', backgroundColor: '#FFF' }}>
+    <Box sx={{ minHeight: '100vh', minWidth: '100vw', backgroundColor: '#FFF', overflow: 'hidden' }}>
       <AnimationProvider>
         <ThemeProvider theme={theme}>
           <MouseProvider>
+            {/* <Canvas /> */}
             <Cursor />
             <MainAnimation />
             <LandingPage />
-            <Terminal />
+            {/* <Terminal /> */}
           </MouseProvider>
         </ThemeProvider>
       </AnimationProvider>
     </Box >
   );
 }
+
 
 export default App;

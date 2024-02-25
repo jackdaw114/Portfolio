@@ -1,0 +1,28 @@
+.landing-content {
+    overflow-x: auto;
+    box-sizing: border-box;
+    position: absolute;
+
+}
+
+.fira-container {
+    font-family: "Fira Code", monospace;
+
+}
+
+.text-divider {
+    border-left: 2px solid rgba(71, 81, 89, 0.5);
+    margin-right: 3.3em;
+    font-size: 1.1em;
+}
+
+.margin-numbers {
+    padding-right: 2em;
+    font-size: 1.1em;
+    text-align: center;
+    color: rgba(113, 125, 140, 0.75);
+}
+
+.editor-span {
+    white-space: nowrap;
+}
