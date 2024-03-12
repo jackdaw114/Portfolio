@@ -2,6 +2,9 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { AnimationContext } from "../design_components/AnimationContext"
 import { Box, Typography } from "@mui/material";
 import { MouseContext } from "../design_components/MouseContext";
+import "./SideNav.css"
+
+const side_bar_width = 66
 
 export default function SideNav({ width, setWidth }) {
     const { animationStep } = useContext(AnimationContext)
@@ -26,8 +29,10 @@ export default function SideNav({ width, setWidth }) {
         const handleMouseMove = (e) => {
             if (isResizing) {
                 const bbox = sideNavRef.current.getBoundingClientRect()
-
-                setWidth(e.clientX);
+                if (e.clientX < 200)
+                    setWidth(side_bar_width)
+                else
+                    setWidth(e.clientX);
             }
         };
 
@@ -64,8 +69,27 @@ export default function SideNav({ width, setWidth }) {
 
                         zIndex: 2
                     }}>
-                        <Box className="resizer" onMouseDown={handleMouseDown} onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave} sx={{ backgroundColor: 'transparent', borderRight: 1, borderColor: resizerColor, height: '100%', width: '6px', float: 'right' }} />
+                        <Box onMouseDown={handleMouseDown} onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave} sx={{ backgroundColor: 'transparent', borderRight: 1, borderColor: resizerColor, height: '100%', width: 6, float: 'right' }} />
+
+                        <Box sx={{ display: 'flex', height: '100%' }}>
+                            <span className="side-span" style={{ minWidth: side_bar_width - 6, maxWidth: side_bar_width - 6, width: side_bar_width - 6, }}>
+                                ads;lkfasdfljk
+                                {/* TODO: menu list here */}
+                            </span>
+                            <span className="side-nav-main side-span" style={{ width: width - side_bar_width }}>
+                                <Typography sx={{
+                                    paddingLeft: 4,
+                                    paddingTop: 1,
+                                    fontSize: 18
+                                }}>
+                                    EXPLORER
+
+                                </Typography>
+                                {/* TODO: dynamic list here? */}
+                            </span>
+
+                        </Box>
 
                     </Box >
                 </> : <></>

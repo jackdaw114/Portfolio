@@ -58,20 +58,24 @@ export default function LandingPage() {
 
                     <Header sx={{ width: containerWidth }} />
                     <SideNav width={sideNavWidth} setWidth={setSideNavWidth} />
-                    <Box ref={containerRef} sx={{ height: '100vh', display: 'flex', flexDirection: 'column', width: containerWidth, maxWidth: containerWidth }}>
+                    <Box ref={containerRef} sx={{ height: '100vh', display: 'flex', flexDirection: 'column', width: containerWidth, maxWidth: containerWidth, overflow: 'hidden' }}>
                         <Box className='content-box' sx={{ height: containerHeight, maxHeight: containerHeight }}>
-                            <Box sx={{ maxHeight: '32px', height: '32px', backgroundColor: `rgba(${bColor.join(', ')})`, boxSizing: 'border-box', zIndex: 3, width: { containerWidth }, borderBottom: 3, borderColor: 'rgba(30,38,47,0.85)', alignItems: 'center', display: 'flex', paddingLeft: 2 }}>
 
 
+                            <TopNavBar bColor={bColor} containerWidth={containerWidth}>
                                 <TopTextSpan>
                                     home <ArrowWrapper />
                                 </TopTextSpan>
                                 <TopTextSpan>
-
+                                    {/* loop here for location */}
                                 </TopTextSpan>
-                            </Box>
+                            </TopNavBar>
+
+
+
+                            {/* use routing here  */}
                             <LandingContent height={containerHeight - 32 - 91} width={containerWidth} />
-                            {/* <ThreeDNav height={containerHeight - 32 - 91} /> */}
+                            <ThreeDNav height={containerHeight - 32 - 91} />
 
                         </Box>
                         <Terminal height={terminalHeight} setHeight={setTerminalHeight} width={containerWidth} />
@@ -80,8 +84,18 @@ export default function LandingPage() {
 
 
 
-                </Box> : <></>
+                </Box > : <></>
             }
         </>
+    )
+}
+
+
+const TopNavBar = ({ props, children, containerWidth, bColor }) => {
+    return (
+
+        <Box {...props} sx={{ maxHeight: '32px', height: '32px', backgroundColor: `rgba(${bColor.join(', ')})`, boxSizing: 'border-box', zIndex: 3, width: { containerWidth }, borderBottom: 3, borderColor: 'rgba(30,38,47,0.85)', alignItems: 'center', display: 'flex', paddingLeft: 2 }}>
+            {children}
+        </Box>
     )
 }

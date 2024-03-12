@@ -5,22 +5,28 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#1976d2', // Change primary color
+            main: '#1976d2',
         },
         secondary: {
-            main: '#dc004e', // Change secondary color
+            main: '#dc004e',
         },
-        // You can add more custom colors if needed
+        text: {
+            primary: "#babbd1",
+            secondary: '#babbd1'
+        }
+
     },
     typography: {
         fontFamily: [
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
+            'Fira Code',
+            'monospace'
         ].join(','),
-        // You can customize typography such as font size, weight, etc.
+        allVariants: {
+            color: "#babbd1"
+        },
+
     },
+
     // Add more customizations such as spacing, breakpoints, etc.
 });
 

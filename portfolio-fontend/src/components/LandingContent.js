@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AnimationContext } from "../design_components/AnimationContext";
 import { Box, Divider, Typography } from "@mui/material";
 import './LandingContent.css'
@@ -48,22 +48,7 @@ export default function LandingContent({ height, width }) {
     const [count, setCount] = useState(1);
     const [fileContent, setFileContent] = useState('')
 
-    const EditorLine = ({ children, lnumber }) => {
 
-        return (
-            <FiraCodeText color='#babbd1' >
-                <span >
-                    <span className="margin-numbers" style={{ paddingLeft: `${(4.0 * 1.3 - lnumber.toString().length / 1.3) / 1.3}em` }}>
-                        {lnumber}
-                    </span>
-
-                    {children}
-                </span>
-                <br />
-
-            </FiraCodeText>
-        )
-    }
     return (
         <>
             {animationStep === 1 ? <Box className='landing-content fade-component' sx={{ fontFamily: 'Fira Code', maxHeight: height, width: width, height: height }}>
@@ -96,8 +81,17 @@ export default function LandingContent({ height, width }) {
                         <TextSpan>R"Greetings Visitor, Welcome to my homepage!  </TextSpan>
                     </EditorLine>
                     <EditorLine lnumber={7}><TabDivider />
-                        <TextSpan>You can navigate through the content by simply reading the strings enclosed within quotes"</TextSpan>;
+                        <TextSpan>You can navigate through the content by   reading the strings enclosed within quotes {"{such as this one}"}"</TextSpan>;
                     </EditorLine>
+
+                    <EditorLine lnumber={8}><TabDivider />
+                        <FunctionSpan>output</FunctionSpan>
+                        <NBracketsSpan>(</NBracketsSpan>
+                        <VariableSpan>message</VariableSpan>
+                        <NBracketsSpan>)</NBracketsSpan>
+                        ;
+                    </EditorLine>
+                    <EditorLine lnumber={9}><NBracketsSpan>{'}'}</NBracketsSpan></EditorLine>
                 </Box>
 
 
@@ -110,3 +104,26 @@ export default function LandingContent({ height, width }) {
 
 
 
+const EditorLine = ({ children, lnumber }) => {
+    //const [modifiedChildren, setModifiedChildren] = useState()
+    console.log(children)
+
+
+
+
+    return (
+        <FiraCodeText color='#babbd1' >
+            <span >
+                <span className="margin-numbers " style={{ paddingLeft: `${(4.0 * 1.3 - lnumber.toString().length / 1.3) / 1.3}em` }}>
+                    {lnumber}
+                </span>
+                <span className="anim-typewriter">
+                    {children}
+
+                </span>
+            </span>
+            <br />
+
+        </FiraCodeText>
+    )
+}
